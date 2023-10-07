@@ -1,0 +1,11 @@
+[GIN-debug] GET    /ping                     --> news/router.Load.func1 (4 handlers)
+[GIN-debug] GET    /test                     --> news/logic.Test (4 handlers)
+[GIN-debug] GET    /api/news                 --> news/logic.News (4 handlers)
+[GIN-debug] GET    /api/news/more            --> news/logic.More (4 handlers)
+[GIN-debug] GET    /api/news/:id             --> news/logic.Article (4 handlers)
+[GIN-debug] GET    /api/categories           --> news/logic.Categories (4 handlers)
+[GIN-debug] GET    /api/updateImgage         --> news/logic.UpdateImage (4 handlers)
+[GIN-debug] GET    /api/update               --> news/logic.UpdateArticle (5 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on 0.0.0.0:82
