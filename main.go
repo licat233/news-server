@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"news/logic"
 	"news/router"
@@ -17,21 +16,23 @@ import (
 )
 
 func main() {
-	err := logic.UpdateArticleHandler(context.Background())
-	if err != nil {
-		fmt.Println(err)
-	}
+	handler()
+}
 
+func handler() {
 	start := time.Now()
 	defer func() {
 		duration := time.Now().Sub(start)
 		fmt.Println("耗時:", duration)
 	}()
-	err = logic.UpdateImageHandler(context.Background())
-	log.Fatalln(err)
+
+	err := logic.ArticleHandler(context.Background())
+	if err != nil {
+		fmt.Println(err)
+	}
 }
 
-func main2() {
+func api() {
 	// gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
 	// 添加CORS中间件

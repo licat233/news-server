@@ -8,13 +8,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+const NEWEST = "newest"
+const HOT = "hot"
+
 func News(ctx *gin.Context) {
-	columnIdV := ctx.DefaultQuery("columnId", "-2") //最新
-	columnId, err := strconv.Atoi(columnIdV)
-	if err != nil {
-		resp.ExtErr(ctx, err)
-		return
-	}
+	category := ctx.DefaultQuery("category", NEWEST) //最新
 
 	minIdV := ctx.DefaultQuery("minId", "0")
 	minId, err := strconv.Atoi(minIdV)
@@ -33,27 +31,20 @@ func News(ctx *gin.Context) {
 		pageSize = 100
 	}
 
-	viewsCountV := ctx.DefaultQuery("viewsCount", "0")
-	viewsCount, err := strconv.Atoi(viewsCountV)
-	if err != nil {
-		resp.ExtErr(ctx, err)
-		return
-	}
 	a := global.DB.Article
 	fields := articleListFields(global.DB)
 	do := a.WithContext(ctx).Select(fields...).Limit(pageSize)
-	if minId > 0 && columnId != -1 {
+	if minId > 0 {
 		do = do.Where(a.ID.Lt(int32(minId)))
 	}
-	if columnId > 0 {
-		do = do.Where(a.ColumnID.Eq(strconv.Itoa(columnId))).Order(a.ID.Desc())
-	} else if columnId == -1 { //熱門
-		if viewsCount > 0 {
-			do = do.Where(a.ViewsCount.Lt(int32(viewsCount)))
-		}
+
+	switch category {
+	case NEWEST:
+		do = do.Order(a.PublishAt.Desc(), a.ID.Desc())
+	case HOT:
 		do = do.Order(a.ViewsCount.Desc(), a.ID.Desc())
-	} else { //最新
-		do = do.Order(a.ID.Desc())
+	default:
+		do = do.Where(a.Category.Eq(category)).Order(a.ID.Desc())
 	}
 
 	articles, err := do.Find()

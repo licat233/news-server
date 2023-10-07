@@ -8,10 +8,10 @@ import (
 	"gorm.io/gorm"
 )
 
-var errNotFound = errors.New("not exsit")
+var errNotFoundMsg = errors.New("not exsit")
 var ErrRecordNotFound = gorm.ErrRecordNotFound
 
 func articleListFields(DB *query.Query) []field.Expr {
 	a := DB.Article
-	return []field.Expr{a.ID, a.Title, a.AuthorName, a.Cover, a.PublishedAt, a.ColumnID, a.ColumnName, a.ViewsCount}
+	return []field.Expr{a.ID, a.UUID, a.Title, a.Category, a.PublishAt, a.Author, a.Cover, a.ViewsCount, a.Tags}
 }

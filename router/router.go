@@ -21,8 +21,5 @@ func Load(r *gin.Engine) {
 		api.GET("/news/:id", logic.Article)
 		api.GET("/categories", logic.Categories)
 		api.GET("/updateImgage", logic.UpdateImage)
-		// api.GET("/update", gin.BasicAuth(gin.Accounts{
-		// 	"licat": "licat233",
-		// }), logic.UpdateArticle)
 	}
 }

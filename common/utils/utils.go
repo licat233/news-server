@@ -27,3 +27,16 @@ func RandNumbers(max int64, count int) []int {
 func UUID() string {
 	return uuid.New().String()
 }
+
+func GenerateUID(length int) string {
+	if length <= 0 {
+		length = 8
+	}
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	b := make([]byte, length)
+	for i := range b {
+		b[i] = charset[r.Intn(len(charset))]
+	}
+	return string(b)
+}

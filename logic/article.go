@@ -20,7 +20,7 @@ func Article(ctx *gin.Context) {
 	do := a.WithContext(ctx)
 	data, err := do.Select().Where(a.ID.Eq(int32(id))).First()
 	if errors.Is(err, ErrRecordNotFound) {
-		resp.ExtErr(ctx, errNotFound)
+		resp.ExtErr(ctx, errNotFoundMsg)
 		return
 	} else if err != nil {
 		resp.IntErr(ctx, err)

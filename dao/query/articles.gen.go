@@ -28,24 +28,19 @@ func newArticle(db *gorm.DB, opts ...gen.DOOption) article {
 	tableName := _article.articleDo.TableName()
 	_article.ALL = field.NewAsterisk(tableName)
 	_article.ID = field.NewInt32(tableName, "id")
-	_article.FromID = field.NewString(tableName, "from_id")
+	_article.UUID = field.NewString(tableName, "uuid")
+	_article.RawUID = field.NewString(tableName, "raw_uid")
 	_article.Title = field.NewString(tableName, "title")
-	_article.Summary = field.NewString(tableName, "summary")
-	_article.ColumnID = field.NewString(tableName, "column_id")
-	_article.ColumnName = field.NewString(tableName, "column_name")
-	_article.AuthorName = field.NewString(tableName, "author_name")
-	_article.AuthorEmail = field.NewString(tableName, "author_email")
-	_article.AuthorAvatar = field.NewString(tableName, "author_avatar")
-	_article.PostID = field.NewString(tableName, "post_id")
+	_article.Category = field.NewString(tableName, "category")
+	_article.PublishAt = field.NewTime(tableName, "publish_at")
+	_article.Author = field.NewString(tableName, "author")
 	_article.Cover = field.NewString(tableName, "cover")
-	_article.Content = field.NewString(tableName, "content")
+	_article.TextContent = field.NewString(tableName, "text_content")
+	_article.HTMLContent = field.NewString(tableName, "html_content")
 	_article.ViewsCount = field.NewInt32(tableName, "views_count")
-	_article.CommentsCount = field.NewInt32(tableName, "comments_count")
-	_article.StoreAt = field.NewString(tableName, "store_at")
-	_article.PublishedAt = field.NewString(tableName, "published_at")
-	_article.Type = field.NewString(tableName, "type")
-	_article.CreatedAt = field.NewTime(tableName, "created_at")
-	_article.UpdatedAt = field.NewTime(tableName, "updated_at")
+	_article.Tags = field.NewString(tableName, "tags")
+	_article.CreateAt = field.NewTime(tableName, "create_at")
+	_article.UpdateAt = field.NewTime(tableName, "update_at")
 
 	_article.fillFieldMap()
 
@@ -55,26 +50,21 @@ func newArticle(db *gorm.DB, opts ...gen.DOOption) article {
 type article struct {
 	articleDo articleDo
 
-	ALL           field.Asterisk
-	ID            field.Int32
-	FromID        field.String
-	Title         field.String
-	Summary       field.String
-	ColumnID      field.String
-	ColumnName    field.String
-	AuthorName    field.String
-	AuthorEmail   field.String
-	AuthorAvatar  field.String
-	PostID        field.String
-	Cover         field.String
-	Content       field.String
-	ViewsCount    field.Int32
-	CommentsCount field.Int32
-	StoreAt       field.String
-	PublishedAt   field.String
-	Type          field.String
-	CreatedAt     field.Time
-	UpdatedAt     field.Time
+	ALL         field.Asterisk
+	ID          field.Int32
+	UUID        field.String
+	RawUID      field.String
+	Title       field.String
+	Category    field.String
+	PublishAt   field.Time
+	Author      field.String
+	Cover       field.String
+	TextContent field.String
+	HTMLContent field.String
+	ViewsCount  field.Int32
+	Tags        field.String
+	CreateAt    field.Time
+	UpdateAt    field.Time
 
 	fieldMap map[string]field.Expr
 }
@@ -92,24 +82,19 @@ func (a article) As(alias string) *article {
 func (a *article) updateTableName(table string) *article {
 	a.ALL = field.NewAsterisk(table)
 	a.ID = field.NewInt32(table, "id")
-	a.FromID = field.NewString(table, "from_id")
+	a.UUID = field.NewString(table, "uuid")
+	a.RawUID = field.NewString(table, "raw_uid")
 	a.Title = field.NewString(table, "title")
-	a.Summary = field.NewString(table, "summary")
-	a.ColumnID = field.NewString(table, "column_id")
-	a.ColumnName = field.NewString(table, "column_name")
-	a.AuthorName = field.NewString(table, "author_name")
-	a.AuthorEmail = field.NewString(table, "author_email")
-	a.AuthorAvatar = field.NewString(table, "author_avatar")
-	a.PostID = field.NewString(table, "post_id")
+	a.Category = field.NewString(table, "category")
+	a.PublishAt = field.NewTime(table, "publish_at")
+	a.Author = field.NewString(table, "author")
 	a.Cover = field.NewString(table, "cover")
-	a.Content = field.NewString(table, "content")
+	a.TextContent = field.NewString(table, "text_content")
+	a.HTMLContent = field.NewString(table, "html_content")
 	a.ViewsCount = field.NewInt32(table, "views_count")
-	a.CommentsCount = field.NewInt32(table, "comments_count")
-	a.StoreAt = field.NewString(table, "store_at")
-	a.PublishedAt = field.NewString(table, "published_at")
-	a.Type = field.NewString(table, "type")
-	a.CreatedAt = field.NewTime(table, "created_at")
-	a.UpdatedAt = field.NewTime(table, "updated_at")
+	a.Tags = field.NewString(table, "tags")
+	a.CreateAt = field.NewTime(table, "create_at")
+	a.UpdateAt = field.NewTime(table, "update_at")
 
 	a.fillFieldMap()
 
@@ -134,26 +119,21 @@ func (a *article) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (a *article) fillFieldMap() {
-	a.fieldMap = make(map[string]field.Expr, 19)
+	a.fieldMap = make(map[string]field.Expr, 14)
 	a.fieldMap["id"] = a.ID
-	a.fieldMap["from_id"] = a.FromID
+	a.fieldMap["uuid"] = a.UUID
+	a.fieldMap["raw_uid"] = a.RawUID
 	a.fieldMap["title"] = a.Title
-	a.fieldMap["summary"] = a.Summary
-	a.fieldMap["column_id"] = a.ColumnID
-	a.fieldMap["column_name"] = a.ColumnName
-	a.fieldMap["author_name"] = a.AuthorName
-	a.fieldMap["author_email"] = a.AuthorEmail
-	a.fieldMap["author_avatar"] = a.AuthorAvatar
-	a.fieldMap["post_id"] = a.PostID
+	a.fieldMap["category"] = a.Category
+	a.fieldMap["publish_at"] = a.PublishAt
+	a.fieldMap["author"] = a.Author
 	a.fieldMap["cover"] = a.Cover
-	a.fieldMap["content"] = a.Content
+	a.fieldMap["text_content"] = a.TextContent
+	a.fieldMap["html_content"] = a.HTMLContent
 	a.fieldMap["views_count"] = a.ViewsCount
-	a.fieldMap["comments_count"] = a.CommentsCount
-	a.fieldMap["store_at"] = a.StoreAt
-	a.fieldMap["published_at"] = a.PublishedAt
-	a.fieldMap["type"] = a.Type
-	a.fieldMap["created_at"] = a.CreatedAt
-	a.fieldMap["updated_at"] = a.UpdatedAt
+	a.fieldMap["tags"] = a.Tags
+	a.fieldMap["create_at"] = a.CreateAt
+	a.fieldMap["update_at"] = a.UpdateAt
 }
 
 func (a article) clone(db *gorm.DB) article {

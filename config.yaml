@@ -1,5 +1,5 @@
 datasource: "root:@tcp(127.0.0.1:3306)/news?charset=utf8mb4&parseTime=True&loc=Local"
-file: "/Users/licat/Desktop/project/spiderweb/pyspider/PostInfos.xlsx"
+# file: "/Users/licat/Desktop/project/spiderweb/pyspider/PostInfos.xlsx"
 # aliOssId: "LTAI5tPkExr4PnscR1CbJKpu"
 # aliOssSecret: "e0SxgSSgCduxsJR7KtYAGgGoe5cXav"
 bucketName: "news-storage"
